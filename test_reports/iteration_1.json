@@ -1,0 +1,32 @@
+{
+  "summary": "Frontend-only testing of the NAMOA GROUP R3F site focused on the WebGLGuard fix. Verified all 4 pages (/, /trade, /logistics, /consulting) with WebGL available (canvas renders, zero console/page errors), with WebGL fully blocked via CDP-style init script overriding HTMLCanvasElement.getContext for webgl/webgl2 (static fallback [data-testid='webgl-fallback'] renders, no CRA 'Uncaught runtime errors' overlay, hero headlines render, verified on desktop 1920x1080 and mobile 390x844), scroll-driven logistics story (SOURCE -> COORDINATE -> MOVE -> DELIVER captions change correctly across 560vh pinned section, 4 stage indicators present), and SPA navigation (chapter-link-trade, footer-link-*, nav-logo-link across 9 navigations, 1 canvas per page, no WebGL context leak warnings). Primary acceptance criterion PASSES. One residual gap found: the CanvasErrorBoundary does not catch the WebGLRenderer throw when the pre-flight probe succeeds but the actual R3F canvas cannot obtain a context (reproduced 3/3 runs, exact user-reported error escapes as an uncaught pageerror and the CRA overlay appears).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "WebGLGuard / CanvasErrorBoundary", "issue": "Residual crash path: when supportsWebGL() probe returns a context but the real R3F Canvas fails to create one (probe uses NO gl attributes while Canvas requests antialias/alpha/powerPreference), three throws 'THREE.WebGLRenderer: Error creating WebGL context.' from inside R3F's layout-effect and the error is NOT caught by CanvasErrorBoundary (fallback count = 0, canvas stays in DOM). Confirmed the CRA overlay #webpack-dev-server-client-overlay renders 'Uncaught runtime errors: ... THREE.WebGLRenderer: Error creating WebGL context.' Reproduced deterministically 3/3 runs on / and /trade by making the first webgl getContext return a stub and later ones return null.", "selector": "[data-testid='webgl-fallback'] (missing in this case)", "priority": "HIGH"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Home hero (mobile 390x844)", "issues": ["3D ecosystem nodes/lines render directly over the headline and body paragraph (no white scrim/gradient on mobile like the desktop left-to-right white gradient), reducing text legibility"]},
+      {"screen": "Consulting hero (desktop)", "issues": ["Large drifting cubes pass over the headline/subcopy area; consider a stronger left-side scrim or keeping large instances off the text column"]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Harden WebGLGuard: probe with the SAME gl attributes the Canvas uses (or better, pass a gl factory to Canvas: gl={(canvas)=>{try{return new THREE.WebGLRenderer({canvas,...})}catch(e){/* trigger fallback state */}}}) so the renderer failure never throws out of the React tree",
+    "Add a window 'error'/'unhandledrejection' listener (or onCreated/onError guard) in WebGLGuard that flips to StaticFallback when a 'Error creating WebGL context' error escapes, since layout-effect/async throws from R3F are not reliably caught by the error boundary",
+    "Add a mobile white scrim behind the hero copy on Home (and Consulting) so 3D geometry does not sit under text"
+  ],
+  "critical_code_review_comments": [
+    "WebGLGuard.supportsWebGL() caches the result module-level and probes with no context attributes; a browser can succeed on the bare probe and still fail with {antialias, alpha, failIfMajorPerformanceCaveat, powerPreference} — this is the exact gap that still produces the user-reported uncaught error.",
+    "CanvasErrorBoundary.componentDidCatch() is an empty function; log the error (console.warn) so this failure mode is diagnosable in production.",
+    "supportsWebGL() calls WEBGL_lose_context.loseContext() on the probe context which is good for context budget; keep it, but the probe canvas should also be dereferenced."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "not tested (frontend-only request)", "frontend": "90% (3 of 4 WebGL failure scenarios handled; happy path, scroll story and navigation all pass)"},
+  "seed_data_creation": "none",
+  "should_call_test_agent_after_fix": true,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "No backend flows exist. Reproduce the residual crash with page.add_init_script overriding HTMLCanvasElement.prototype.getContext so the FIRST webgl request returns a stub object {getExtension:()=>null} and subsequent ones return null; then assert [data-testid='webgl-fallback'] exists and document.querySelector('#webpack-dev-server-client-overlay') is null. Full-block scenario (all webgl getContext -> null) already passes on all 4 pages incl. mobile. Logistics story stages verified by scrolling to 5%/25%/45%/65%/85%/98% of [data-testid='logistics-story-section'] (height ~6048px at 1920x1080).",
+  "rca_of_the_issue": "WebGLGuard gates on a bare getContext('webgl2'|'webgl') probe. The user's failure mode (no WebGL at all) is now correctly handled -> StaticFallback renders with no runtime error. However, when a context can be created without attributes but not with the attributes R3F passes, three's WebGLRenderer constructor throws inside R3F's layout effect; React does not route this to the wrapping CanvasErrorBoundary (fallback never renders) so it surfaces as an uncaught runtime error / CRA overlay. Fix by catching at the renderer-creation site (gl factory) instead of relying only on the boundary."
+}

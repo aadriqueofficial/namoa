@@ -1,0 +1,107 @@
+{
+  "project_identity": {
+    "brand_name": "NAMOA GROUP",
+    "positioning": "Premium Global Corporate Group & Enterprise Supply Network",
+    "theme_mode": "LIGHT_DOMINANT",
+    "theme_distribution": {
+      "white_light_neutral": "75%",
+      "navy_secondary_blue": "15%",
+      "premium_gold_accents": "10%"
+    },
+    "shared_3d_metaphor": "NETWORK + MOVEMENT + CONNECTION",
+    "motion_rule": "STATIC -> INTRODUCE, SCROLL -> TRANSFORM, INTERACT -> REVEAL, ARRIVE -> RESOLVE"
+  },
+  "colors": {
+    "background_pure": "#FFFFFF",
+    "background_offwhite": "#F7F8FA",
+    "background_soft_neutral": "#EEF1F3",
+    "primary_brand_navy": "#0B2742",
+    "deep_navy": "#081D30",
+    "secondary_blue": "#174E73",
+    "premium_gold": "#C8A44D",
+    "light_gold": "#F5EEDB",
+    "primary_text": "#13202B",
+    "muted_text": "#687583",
+    "border_light": "rgba(11, 39, 66, 0.12)",
+    "border_gold": "rgba(200, 164, 77, 0.3)"
+  },
+  "typography": {
+    "heading_font": "Inter, Manrope, system-ui, sans-serif",
+    "body_font": "Inter, Manrope, system-ui, sans-serif",
+    "mono_font": "JetBrains Mono, Source Code Pro, monospace",
+    "h1": "text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#13202B]",
+    "h2": "text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#0B2742]",
+    "h3": "text-xl sm:text-2xl font-medium text-[#13202B]",
+    "eyebrow_label": "text-xs uppercase tracking-[0.2em] font-mono text-[#C8A44D] font-semibold"
+  },
+  "grids_and_layouts": {
+    "hero_layout": "Asymmetric editorial split with 3D canvas viewport on right/center",
+    "bento_mode": "Tetris Grid with generous padding (gap-8 to gap-12, p-8 to p-12)",
+    "pinned_scroll_sections": "GSAP/Framer Motion pinned story triggers for 3D stage updates",
+    "container_padding": "px-6 md:px-12 lg:px-20 max-w-7xl mx-auto"
+  },
+  "3d_storytelling_specifications": {
+    "homepage_hero": {
+      "title": "Ecosystem 3D Node Sphere",
+      "concept": "Interactive 3D constellation of business nodes connecting dynamically around NAMOA core",
+      "canvas_id": "hero-3d-canvas"
+    },
+    "vertical_01_trade": {
+      "route": "/trade",
+      "title": "Global Supply Network",
+      "metaphor": "Fragmented supplier nodes connecting into organized network with NAMOA at center",
+      "scroll_stages": [
+        "01 DISPERSED NODES - Fragmented international supplier data",
+        "02 SOURCING CLUSTER - Aggregation into vetted trade corridors",
+        "03 INTEGRATED SUPPLY GRID - Dynamic contract & quality optimization",
+        "04 CENTRALIZED EXCHANGE - Synchronized global distribution"
+      ]
+    },
+    "vertical_02_logistics": {
+      "route": "/logistics",
+      "title": "The Journey Engine",
+      "metaphor": "3D cargo vessel & modern freight vehicle moving through staging environments",
+      "scroll_stages": [
+        "SOURCE - Warehouse intake & automated cataloging",
+        "COORDINATE - Multimodal routing & customs clearance",
+        "MOVE - High-speed transit across maritime & land corridors",
+        "DELIVER - Destination arrival & precision final-mile handoff"
+      ]
+    },
+    "vertical_03_consulting": {
+      "route": "/consulting",
+      "title": "The Strategy Engine",
+      "metaphor": "Scattered corporate requirement blocks organizing into structured execution architecture",
+      "scroll_stages": [
+        "UNDERSTAND - Diagnostic matrix & data point extraction",
+        "PLAN - Strategic framework blueprinting",
+        "CONNECT - Stakeholder & capital alignment",
+        "COORDINATE - Operational workflow synchronization",
+        "EXECUTE - Scalable enterprise architecture delivery"
+      ]
+    }
+  },
+  "image_urls": {
+    "cargo_port": "https://images.unsplash.com/photo-1609972626304-96959161d195?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxjYXJnbyUyMHNoaXBwaW5nJTIwY29udGFpbmVyJTIwcG9ydCUyMHN1bnNldHxlbnwwfHx8fDE3ODc1ODI5OTZ8MA&ixlib=rb-4.1.0&q=85",
+    "skyscraper_facade": "https://images.unsplash.com/photo-1512403754473-27835f7b9984?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBhcmNoaXRlY3R1cmUlMjBza3lzY3JhcGVyJTIwZmFjYWRlfGVufDB8fHx8MTc4NzU4Mjk5N3ww&ixlib=rb-4.1.0&q=85",
+    "logistics_truck": "https://images.unsplash.com/photo-1616432043562-3671ea2e5242?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsb2dpc3RpY3MlMjB0cnVjayUyMGhpZ2h3YXl8ZW58MHx8fHwxNzg3NTgyOTk3fDA&ixlib=rb-4.1.0&q=85",
+    "cargo_ship": "https://images.pexels.com/photos/262353/pexels-photo-262353.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "corporate_glass_tower": "https://images.pexels.com/photos/37320179/pexels-photo-37320179.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  },
+  "instructions_to_main_agent": [
+    "Implement routing for Home (/), Trade (/trade), Logistics (/logistics), and Consulting (/consulting).",
+    "Ensure the theme is light-dominant: background #FFFFFF and #F7F8FA with dark navy text (#13202B) and gold accents (#C8A44D).",
+    "Build custom 3D interactive canvases (using Three.js / R3F / Canvas 2D WebGL high-performance renders) for each vertical hero and home hero.",
+    "Implement scroll-pinned story stages with smooth step transitions and interactive stage indicators.",
+    "Include key sections on Home: Hero, Business Verticals (01, 02, 03 chapter cards), Sectors/Where We Operate, Capabilities, Network Flow, Future Focus (clearly tagged EMERGING FOCUS), Vision Statement, Contact info section, and Footer.",
+    "Navigation bar must feature logo, menu links (About, Businesses, Sectors, Capabilities, Future Focus, Company Profile, Contact), and 'Partner With NAMOA →' CTA button with data-testid='nav-partner-btn'.",
+    "Add test IDs (`data-testid`) to all major interactive controls, links, chapter cards, and CTAs.",
+    "Contact section must contain registered address, phone, and email information without a form."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Never use dark full-screen backgrounds; respect the ~75% white/off-white light palette requirement.",
+    "Ensure high contrast for readability (APCA / WCAG AA minimum 4.5:1 for normal text).",
+    "Always specify hover state text colors explicitly (e.g., hover:bg-[#0B2742] hover:text-white).",
+    "Maintain strict data-testid conventions on buttons, links, cards, and input controls."
+  ]
+}
