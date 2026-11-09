@@ -300,3 +300,36 @@ body {
         border-bottom-color: inherit;
     }
 }
+
+/* Launch ceremony (/launch) */
+.launch-shine {
+    background: linear-gradient(110deg, #B48C2E 0%, #C8A44D 35%, #FFF3C4 50%, #C8A44D 65%, #B48C2E 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: launchShine 2.6s ease-in-out infinite;
+}
+@keyframes launchShine {
+    0% { background-position: 120% 0; }
+    100% { background-position: -120% 0; }
+}
+.launch-orbit {
+    animation: launchOrbit 18s linear infinite;
+}
+.launch-orbit-rev {
+    animation: launchOrbit 28s linear infinite reverse;
+}
+@keyframes launchOrbit {
+    to { transform: rotate(360deg); }
+}
+.launch-breathe {
+    animation: launchBreathe 2.6s ease-in-out infinite;
+}
+@keyframes launchBreathe {
+    0%, 100% { box-shadow: 0 0 40px rgba(200, 164, 77, 0.35), inset 0 -6px 18px rgba(0, 0, 0, 0.18), inset 0 6px 18px rgba(255, 255, 255, 0.25); }
+    50% { box-shadow: 0 0 100px rgba(200, 164, 77, 0.75), inset 0 -6px 18px rgba(0, 0, 0, 0.18), inset 0 6px 22px rgba(255, 255, 255, 0.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .launch-shine, .launch-orbit, .launch-orbit-rev, .launch-breathe { animation: none; }
+}

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { SmoothScroll, getLenis } from "@/lib/scroll";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Home from "@/pages/Home";
@@ -10,6 +10,8 @@ import Consulting from "@/pages/Consulting";
 import Marketing from "@/pages/Marketing";
 import WorkSector from "@/pages/WorkSector";
 import Contact from "@/pages/Contact";
+import Launch from "@/pages/Launch";
+import { LaunchIntro } from "@/components/site/LaunchIntro";
 
 const RouteReset = () => {
   const { pathname } = useLocation();
@@ -23,10 +25,28 @@ const RouteReset = () => {
   return null;
 };
 
-function App() {
+const isLaunchPath = (path) => path.replace(/\/+$/, "") === "/launch";
+
+const AppShell = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  // The brand intro plays on every page load, except on the launch ceremony page,
+  // which plays it on demand after the countdown. `next` is where to go on reveal.
+  const [intro, setIntro] = useState(() => (isLaunchPath(pathname) ? null : { id: 0, next: null }));
+  // The site mounts as the intro starts lifting, so its own entrance animations play on reveal.
+  const [siteReady, setSiteReady] = useState(intro === null);
+
+  const onReveal = () => {
+    setSiteReady(true);
+    if (intro?.next) navigate(intro.next);
+  };
+
+  const goLive = useCallback(() => setIntro({ id: Date.now(), next: "/" }), []);
+
   return (
-    <div className="App">
-      <BrowserRouter>
+    <>
+      {intro && <LaunchIntro key={intro.id} onReveal={onReveal} fadeIn={Boolean(intro.next)} />}
+      {siteReady && (
         <SmoothScroll>
           <RouteReset />
           <Routes>
@@ -37,8 +57,19 @@ function App() {
             <Route path="/marketing" element={<Marketing />} />
             <Route path="/work/:sector" element={<WorkSector />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/launch" element={<Launch onLaunched={goLive} />} />
           </Routes>
         </SmoothScroll>
+      )}
+    </>
+  );
+};
+
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <AppShell />
       </BrowserRouter>
     </div>
   );
