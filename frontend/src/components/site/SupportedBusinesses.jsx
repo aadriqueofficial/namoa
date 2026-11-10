@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight, BrainCircuit } from "lucide-react";
 import { FadeUp } from "@/components/site/Reveal";
-import { SUPPORTED_SECTORS, SUPPORTED_BUSINESSES } from "@/data/content";
+import { SUPPORTED_SECTORS, SUPPORTED_BUSINESSES, AADRIQUE_URL } from "@/data/content";
 import { SECTOR_ICONS } from "@/lib/sectorIcons";
 
 const SectorTile = ({ sector, count, index }) => {
@@ -49,15 +49,17 @@ const SectorTile = ({ sector, count, index }) => {
 
 // A tile in the grid's own voice rather than a linked sector — same footprint
 // and rhythm as SectorTile, different content. Used for the AADRIQUE
-// spotlight and the closing CTA below.
-const FeatureTile = ({ delay, dark, eyebrow, title, copy, footer, to }) => {
-  const Wrapper = to ? Link : "div";
+// spotlight and the closing CTA below. `to` is an in-site route; `href` is an
+// external site, opened in a new tab.
+const FeatureTile = ({ delay, dark, eyebrow, title, copy, footer, to, href }) => {
+  const Wrapper = to ? Link : href ? "a" : "div";
+  const linkProps = to ? { to } : href ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
   return (
     <FadeUp delay={delay} className={dark ? "bg-[#0B2742] h-full" : "bg-white h-full"}>
       <Wrapper
-        {...(to ? { to } : {})}
+        {...linkProps}
         className={`group flex flex-col h-full p-8 md:p-10 ${
-          to && !dark ? "hover:bg-[#F7F8FA] transition-colors duration-400" : ""
+          (to || href) && !dark ? "hover:bg-[#F7F8FA] transition-colors duration-400" : ""
         }`}
       >
         {eyebrow}
@@ -115,13 +117,13 @@ export const SupportedBusinesses = () => {
 
           <FeatureTile
             delay={sectors.length * 0.06}
-            to="/#partners"
+            href={AADRIQUE_URL}
             eyebrow={<BrainCircuit className="text-[#C8A44D]" size={28} strokeWidth={1.6} />}
             title="AADRIQUE"
             copy="Strategic technology & digital transformation partner powering the ecosystem."
             footer={
               <span className="inline-flex items-center gap-2 font-mono-brand text-[10px] tracking-[0.2em] text-[#C8A44D] group-hover:text-[#0B2742] transition-colors">
-                VIEW PARTNER
+                VISIT WEBSITE
                 <ArrowUpRight
                   className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-400"
                   size={14}

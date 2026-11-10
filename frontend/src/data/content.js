@@ -589,12 +589,14 @@ export const SUPPORTED_BUSINESSES = [
 // helps build". Rendered by the StrategicPartners section, reusing BusinessCard
 // — `sector` here holds the partner's role instead of an industry, since that's
 // the badge BusinessCard already renders top-right.
+export const AADRIQUE_URL = "https://www.aadrique.in";
+
 export const STRATEGIC_PARTNERS = [
   {
     num: "01",
     name: "AADRIQUE",
     legalName: "AADRIQUE Tech Pvt. Ltd.",
-    website: "https://aadrique.in",
+    website: AADRIQUE_URL,
     sector: "Strategic Technology & Digital Transformation Partner",
     business: "AI Transformation & Software Engineering",
     location: "Kondapur, Hyderabad",

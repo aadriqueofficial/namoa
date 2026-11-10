@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LOGO_URL, COMPANY_PROFILE_URL, CONTACT, VERTICALS } from "@/data/content";
+import { LOGO_URL, COMPANY_PROFILE_URL, CONTACT, VERTICALS, AADRIQUE_URL } from "@/data/content";
 
 export const Footer = () => (
   <footer data-testid="site-footer" className="bg-[#081D30] text-white">
@@ -65,10 +65,22 @@ export const Footer = () => (
         </div>
       </div>
 
-      <div className="border-t border-white/10 mt-14 pt-7 flex flex-col md:flex-row justify-between gap-3">
+      <div className="border-t border-white/10 mt-14 pt-7 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="text-[12px] text-white/40">© 2026 NAMOA GROUP. All Rights Reserved.</div>
         <div className="font-mono-brand text-[10px] tracking-[0.25em] text-white/40">
           NAMOA GLOBAL VENTURES — EST. 2026 — INDIA
+        </div>
+        <div className="font-mono-brand text-[10px] tracking-[0.25em] text-white/40">
+          POWERED BY{" "}
+          <a
+            href={AADRIQUE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="footer-powered-by"
+            className="text-[#C8A44D] hover:text-white transition-colors"
+          >
+            AADRIQUE
+          </a>
         </div>
       </div>
     </div>
